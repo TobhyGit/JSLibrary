@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google fonts embed -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Italiana&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200..900&display=swap" rel="stylesheet">
+
+    <!-- Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Parsley.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.css" />
+
+    <!-- Required Core Stylesheet -->
+    <link rel="stylesheet" href="node_modules/@glidejs/glide/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="node_modules/@glidejs/glide/dist/css/glide.theme.min.css">
+</head>
+<body>
+
+    <!-- Header with Logo and Navigation -->
+    <header class="main-header">
+        <div class="logo">tobi's furniture</div>
+        <nav>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">SHOP</a></li>
+                <li><a href="#">LOCATION</a></li>
+                <li><a href="#">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Text Section -->
+    <section class="intro-text">
+        <h1>WELCOME TO TOBI'S FURNITURE STORE</h1>
+        <p>QUALITY WILL ALWAYS BE AROUND YOU</p>
+    </section>
+
+    <!-- Fullscreen Video Section -->
+    <section class="video-section">
+        <video id="promoVideo" controls>
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button id="fullscreenButton">Fullscreen</button>
+    </section>
+
+    <!-- Shop Section -->
+    <div class="glide__text">
+        <h1>BROWSE OUR SHOP</h1>
+        <p>THERE IS SOMETHING FOR EVERYONE</p>
+    </div>
+
+    <section class="glide"> 
+        <div class="glide__arrows" data-glide-el="controls">
+            <button class="glide__arroww glide__arrow--left" data-glide-dir="<">PREV</button>
+        </div>
+
+        <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+                <li class="glide__slide"><img src="1.png" alt="1"></li>
+                <li class="glide__slide"><img src="2.png" alt="2"></li>
+                <li class="glide__slide"><img src="3.png" alt="3"></li>
+                <li class="glide__slide"><img src="4.png" alt="4"></li>
+            </ul>
+        </div>
+
+        <div class="glide__arrows" data-glide-el="controls">
+            <button class="glide__arroww glide__arrow--right" data-glide-dir=">">NEXT</button>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section class="map-section">
+        <h1>Visit Our Store</h2>
+        <div id="map"></div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <h1 class="glide__text">Contact Us</h1>
+    <section class="contact-section">
+        <form id="contactForm" data-parsley-validate>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required data-parsley-required="true" data-parsley-length="[2, 30]" />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required data-parsley-type="email" />
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required data-parsley-minlength="20"></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Tobi's Furniture Store. All rights reserved.</p>
+    </footer>
+
+    <!-- Libraries and Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.2.0/screenfull.min.js"></script>
+    <script src="node_modules/@glidejs/glide/dist/glide.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+
+    <!-- Glide Initialization -->
+    <script>
+        new Glide('.glide').mount();
+    </script>
+
+    <!-- Fullscreen Functionality for Video -->
+    <script>
+        document.getElementById('fullscreenButton').addEventListener('click', function () {
+            if (screenfull.isEnabled) {
+                screenfull.toggle(document.getElementById('promoVideo'));
+            } else {
+                console.warn("Fullscreen mode is not supported by this browser.");
+            }
+        });
+    </script>
+
+    <!-- Leaflet Map Initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const map = L.map('map').setView([6.5244, 3.3792], 13); // Coordinates for Lagos Nigeria
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Add a marker for the shop location
+            L.marker([6.5244, 3.3792]).addTo(map)
+                .bindPopup("<b>Tobi's Furniture Store</b><br>Lagos, Nigeria")
+                .openPopup();
+        });
+    </script>
+
+
+    <!-- jQuery (required for Parsley.js) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Parsley.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+
+    <!-- Parsley.js Initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#contactForm').parsley();
+        });
+    </script>
+
+</body>
+</html>
